@@ -1,4 +1,4 @@
-from typing import Set, Iterable, Any
+from typing import Iterable, Any
 from tcod.context import Context
 from tcod.console import Console
 from entity import Entity
@@ -7,8 +7,7 @@ from input_handlers import EventHandler
 from tcod.map import compute_fov
 
 class Engine:
-    def __init__(self, entities: Set[Entity], event_handler: EventHandler,game_map: GameMap, player: Entity):
-        self.entities = entities
+    def __init__(self, event_handler: EventHandler,game_map: GameMap, player: Entity):
         self.event_handler = event_handler
         self.player = player
         self.game_map = game_map
@@ -34,11 +33,6 @@ class Engine:
 
     def render(self, console: Console, context: Context) -> None:
         self.game_map.render(console)
-
-        for entity in self.entities:
-            # Only print entities that are in the FOV
-            if self.game_map.visible[entity.x, entity.y]:
-                console.print(entity.x, entity.y, entity.char, fg=entity.color)
 
         context.present(console)
 
