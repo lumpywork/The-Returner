@@ -8,9 +8,9 @@ if TYPE_CHECKING:
 "A generic object to represent a generic entity such as players, enemies, items,etc"
 class Entity:
     def __init__(self,
-        x: int,
-        y: int,
         color: Tuple[int, int, int],
+        x: int = 0,
+        y: int = 0,
         char: str = "?",
         name: str = "<Unnamed>",
         blocks_movement: bool = False):

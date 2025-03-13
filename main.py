@@ -1,8 +1,9 @@
 #!/usr/bin/.venv python3
 import tcod
+import copy
 from engine import Engine
 from input_handlers import EventHandler
-from entity import Entity
+import entity_factories
 from procgen import generate_dungeon
 
 def main() -> None:
@@ -23,7 +24,7 @@ def main() -> None:
     )
 
     event_handler = EventHandler()
-    player = Entity(int(screen_width / 2), int(screen_height / 2), "@", (255,255,255))
+    player = copy.deepcopy(entity_factories.player)
 
     game_map = generate_dungeon(
         max_rooms=max_rooms,
