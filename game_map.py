@@ -5,9 +5,10 @@ from tcod.console import Console
 import tile_types
 if TYPE_CHECKING:
     from entity import Entity
-
+    from engine import Engine
 class GameMap:
-    def __init__(self, width: int, height: int,entities: Iterable[Entity] = () ):
+    def __init__(self,engine: Engine, width: int, height: int,entities: Iterable[Entity] = () ):
+        self.engine = engine
         self.width, self.height = width, height
         self.entities = set(entities)
         self.tiles = np.full((width, height), fill_value=tile_types.wall, order="F")
@@ -32,7 +33,7 @@ class GameMap:
         If it isn't, but it's in the "explored" array, then draw it with the "dark" colors.
         Otherwise, the default is "SHROUD".
         """
-        console.tiles_rgb[0:self.width, 0:self.height] = np.select(
+        console.tiles_rgb[0: self.width, 0:self.height] = np.select(
             condlist = [self.visible, self.explored],
             choicelist= [self.tiles["light"], self.tiles["dark"]],
             default=tile_types.SHROUD
