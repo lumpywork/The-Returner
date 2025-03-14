@@ -1,8 +1,11 @@
 from __future__ import annotations
 import copy
-from typing import Optional, Tuple, TypeVar, TYPE_CHECKING
+from typing import Optional, Tuple,Type, TypeVar, TYPE_CHECKING
 if TYPE_CHECKING:
     from game_map import GameMap
+    from components.ai import BaseAi
+    from components.fighter import Fighter
+
     T = TypeVar("T", bound="Entity")
 
 "A generic object to represent a generic entity such as players, enemies, items,etc"
@@ -48,3 +51,28 @@ class Entity:
     def move(self,dx: int, dy: int):
         self.x += dx
         self.y += dy
+class Actor(Entity):
+    def __init__(
+        self,
+        *,
+        x: int = 0,
+        y: int = 0,
+        char: str = "?",
+        color: Tuple[int, int, int] = (255, 255, 255),
+        name: str = "<Unnamed>",
+        ai_cls: Type[BaseAi],
+        fighter: Optional[Fighter] = None):
+        super().__init__(
+        x=x,
+        y=y,
+        char=char,
+        color=color,
+        name=name,
+        blocks_movement=True)
+        self.ai: Optional[BaseAi] = ai_cls(self)
+
+        self.fighter = fighter
+        self.fighter.entity = self
+    def is_alive(self) -> bool:
+        """Returns true as long as this actor can perform actions."""
+        return bool(self.ai)
