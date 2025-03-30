@@ -1,12 +1,16 @@
 from __future__ import annotations
 import copy
 from typing import Optional, Tuple,Type, TypeVar, TYPE_CHECKING
+
+import render_order
+from render_order import RenderOrder
 if TYPE_CHECKING:
     from game_map import GameMap
     from components.ai import BaseAi
     from components.fighter import Fighter
 
     T = TypeVar("T", bound="Entity")
+
 
 "A generic object to represent a generic entity such as players, enemies, items,etc"
 class Entity:
@@ -17,13 +21,15 @@ class Entity:
         y: int = 0,
         char: str = "?",
         name: str = "<Unnamed>",
-        blocks_movement: bool = False):
+        blocks_movement: bool = False,
+        render_order: RenderOrder = RenderOrder.CORPSE):
         self.x = x
         self.y = y
         self.char = char
         self.color = color
         self.name = name
         self.blocks_movement = blocks_movement
+        self.render_order = render_order
         if gamemap:
             #If game map isn't provided now then it will be set later
             self.gamemap = gamemap
@@ -68,7 +74,8 @@ class Actor(Entity):
         char=char,
         color=color,
         name=name,
-        blocks_movement=True)
+        blocks_movement=True,
+        render_order= RenderOrder.ACTOR)
         self.ai: Optional[BaseAi] = ai_cls(self)
 
         self.fighter = fighter
