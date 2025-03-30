@@ -1,5 +1,6 @@
 #!/usr/bin/.venv python3
 import tcod
+import color
 import copy
 from engine import Engine
 import entity_factories
@@ -10,7 +11,7 @@ def main() -> None:
     screen_height = 50
 
     map_width = screen_width
-    map_height = screen_height -5
+    map_height = screen_height -7
 
     room_max_size = 10
     room_min_size = 6
@@ -34,6 +35,9 @@ def main() -> None:
         engine=engine
     )
     engine.update_fov()
+    engine.message_log.add_message(
+        "Welcome to the The Returner!", color.welcome_text
+    )
     with tcod.context.new_terminal(
         screen_width,
         screen_height,
