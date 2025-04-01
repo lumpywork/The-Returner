@@ -50,7 +50,7 @@ class EventHandler(tcod.event.EventDispatch[Action]):
     def __init__(self, engine: Engine):
      self.engine = engine
 
-    def handle_events_for(self, context: tcod.context.Context) -> None:
+    def handle_events(self, context: tcod.context.Context) -> None:
         for event in tcod.event.wait():
             context.convert_event(event)
             self.dispatch(event)
