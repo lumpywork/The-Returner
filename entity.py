@@ -1,6 +1,6 @@
 from __future__ import annotations
 import copy
-from typing import Optional, Tuple,Type, TypeVar, TYPE_CHECKING
+from typing import Optional, Tuple, Type, TypeVar, TYPE_CHECKING, Union
 
 import render_order
 from render_order import RenderOrder
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 "A generic object to represent a generic entity such as players, enemies, items,etc"
 
 class Entity:
-    parent: GameMap
+    parent: Union[GameMap, Inventory]
     def __init__(self,
         color: Tuple[int, int, int],
         parent: Optional[GameMap] = None,
