@@ -28,7 +28,7 @@ def render_bar(
     )
 
 def render_names_at_mouse_location(
-        console: Console,x: int, y: int, engine: Engine
+        console: Console, x: int, y: int, engine: Engine
 )-> None:
     mouse_x, mouse_y = engine.mouse_location
     names_at_mouse_location = get_names_at_location(
